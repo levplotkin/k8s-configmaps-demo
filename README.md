@@ -1,1 +1,1 @@
-# k8s-secrets-demo
+# k8s-configmaps-demo

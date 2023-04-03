@@ -1,0 +1,26 @@
+# kubectl create configmap game-config --from-file=./configs
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+spec:
+  containers:
+  - name: test-container
+    image: busybox
+    resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+    command: [ "/bin/sh", "-c", "ls /etc/config/" ]
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: game-config
+  restartPolicy: Never
+# kubectl apply -f pod-configmap-volume.yaml
+# kubectl logs test-pod  
+# kubectl delete -f pod-configmap-volume.yaml
+# kubectl delete configmaps game-config
